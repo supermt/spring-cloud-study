@@ -1,0 +1,11 @@
+server:
+  port: 9000                    # 指定该Eureka实例的端口
+
+eureka:
+  instance:
+    hostname: discovery         # 指定该Eureka实例的主机名
+  client:
+    registerWithEureka: false   # 这是为了防止在单实例情况下，Eureka将自己注册为服务，由于默认情况下处于开启状态，需要手动关闭
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
