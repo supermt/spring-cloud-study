@@ -9,3 +9,4 @@ eureka:
       defaultZone: http://discovery:9000/eureka/
   instance:
     preferIpAddress: true
+    hostname: user

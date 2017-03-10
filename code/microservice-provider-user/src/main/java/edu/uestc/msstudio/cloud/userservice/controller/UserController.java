@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.uestc.msstudio.cloud.recording.LifeCycle;
 import edu.uestc.msstudio.cloud.userservice.dao.UserRepository;
 import edu.uestc.msstudio.cloud.userservice.entity.User;
 
@@ -14,6 +15,7 @@ public class UserController {
   private UserRepository userRepository;
   
   @GetMapping("/{id}")
+  @LifeCycle(action = "test", source = "source", target = "target")
   public User findById(@PathVariable Long id) {
     return  this.userRepository.findOne(id);
   }

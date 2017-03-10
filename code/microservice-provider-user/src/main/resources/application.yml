@@ -18,3 +18,4 @@ eureka:
       defaultZone: http://discovery:9000/eureka/    # 指定注册中心的地址
   instance:
     preferIpAddress: true
+    hostname: movie
