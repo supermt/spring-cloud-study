@@ -9,6 +9,14 @@
   <artifactId>microservice-infrastructure</artifactId>
   
   <dependencies>
+  	<dependency>
+	  	<groupId>edu.uestc.msstudio</groupId>
+	    <artifactId>microservice-model</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+
+	
+	  
 	<dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-eureka</artifactId>
@@ -20,11 +28,19 @@
       <artifactId>spring-cloud-starter-ribbon</artifactId>
     </dependency>
     
+	<!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib-ext-spring -->
+	<dependency>
+	    <groupId>net.sf.json-lib</groupId>
+	    <artifactId>json-lib-ext-spring</artifactId>
+	    <version>1.0.2</version>
+	</dependency>
+
+    
+    
     <dependency>  
 	    <groupId>org.springframework.boot</groupId>  
 	    <artifactId>spring-boot-starter-aop</artifactId>  
 	</dependency>
-	
 	<!-- 数据库链接配置 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -35,5 +51,25 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
+
+    <dependency>
+    	<groupId>com.google.code.gson</groupId>
+    	<artifactId>gson</artifactId>
+    </dependency>
+    
+    <!-- 绘制UML工具 -->
+    <!-- https://mvnrepository.com/artifact/net.sourceforge.plantuml/plantuml -->
+	<dependency>
+	    <groupId>net.sourceforge.plantuml</groupId>
+	    <artifactId>plantuml</artifactId>
+	    <version>8059</version>
+	</dependency>
+	    
   </dependencies>
 </project>

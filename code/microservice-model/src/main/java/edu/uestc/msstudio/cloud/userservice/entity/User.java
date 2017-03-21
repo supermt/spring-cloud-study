@@ -8,14 +8,15 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  @Column
-  private String username;
-  @Column
-  private Integer age;
-  // getters and setters
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@Column
+	private String username;
+	@Column
+	private Integer age;
+	
+	// getters and setters
 	public Long getId() {
 		return id;
 	}
