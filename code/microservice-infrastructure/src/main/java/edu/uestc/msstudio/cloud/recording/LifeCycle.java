@@ -28,6 +28,4 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LifeCycle {
 	public LifeCycleActions action();// the description of the action 
-	
-	public Class<?> operationType(); // operation object type
 }

@@ -154,7 +154,7 @@ public class LifeCycleLogController {
 		String currentTarget = null;
 		
 		for (Record item:input){
-			if (item.getAction()==LifeCycleActions.query){
+			if (item.getAction().toString().contains("query")){
 				continue;
 			}
 			
@@ -257,11 +257,9 @@ public class LifeCycleLogController {
 	private boolean onetoone(Record item) {
 		boolean result = false;
 		switch(item.getAction()){
-			case create: result = true;break;
-			case delete: result = true;break;
-			case query: result = true;break;
-			case transfer: result = true;break;
-			case update: result = true;break;
+			case updateUser: result = true;break;
+			case queryByUser:result = true;break;
+			case queryUserById:result = true;break;
 			default: break;
 		}
 		return result;
@@ -270,7 +268,7 @@ public class LifeCycleLogController {
 	private boolean ontomany(Record item) {
 		boolean result = false;
 		switch(item.getAction()){
-			case split: result = true;break;
+			case splitUser: result = true;break;
 			default: break;
 		}
 		return result;

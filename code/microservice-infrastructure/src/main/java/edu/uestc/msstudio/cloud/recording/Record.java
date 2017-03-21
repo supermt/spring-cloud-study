@@ -31,14 +31,16 @@ import javax.persistence.Table;
 @Table(name="record")
 public class Record {
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	private Date startTime;
 	
 	private Date endTime;
 	
-	private ObjectType operationObject;
+	private ObjectType sourceObject;
+	
+	private ObjectType targetObject;
 	
 	private String instance;// record by host:port which direct to a single server instance
 	
@@ -106,19 +108,27 @@ public class Record {
 		this.endTime = endTime;
 	}
 
-	public ObjectType getOperationObject() {
-		return operationObject;
-	}
-
-	public void setOperationObject(ObjectType operationObject) {
-		this.operationObject = operationObject;
-	}
-
 	public String getJsonSource() {
 		return jsonSource;
 	}
 
 	public void setJsonSource(String jsonSource) {
 		this.jsonSource = jsonSource;
+	}
+
+	public ObjectType getSourceObject() {
+		return sourceObject;
+	}
+
+	public void setSourceObject(ObjectType sourceObject) {
+		this.sourceObject = sourceObject;
+	}
+
+	public ObjectType getTargetObject() {
+		return targetObject;
+	}
+
+	public void setTargetObject(ObjectType targetObject) {
+		this.targetObject = targetObject;
 	}
 }

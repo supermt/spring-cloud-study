@@ -105,51 +105,16 @@ public class LifeCycleScanner {
 	}
 	
 	private void setAction(LifeCycle lifeCycle, Record target) {
-		if(lifeCycle.action()==LifeCycleActions.query){
 			target.setAction(lifeCycle.action());
 			return ;
-		}
-		else {
-			// not only query,save the action
-			target.setAction(lifeCycle.action());
-			
-		}
 	}
 	
 	private void setTarget(LifeCycle lifeCycle, Record target, Object result) {
-		if(lifeCycle.action()==LifeCycleActions.query){
-			solveTarget(result, target);
-			return ;
-		}
-		else if (lifeCycle.action() == LifeCycleActions.create){
-			// saved success 
-			solveTarget(result, target);
-			return ;
-		}else{
-			// expand methods
-		}
+		solveTarget(result, target);
+		return ;
 	}
 
 	private void setSource(LifeCycle lifeCycle, Record target, Object[] args) {
-		if (lifeCycle.action()==LifeCycleActions.query){
-			// if only query the objects , don't save the objects
-			return ;
-		}
-		else{
-			for (Object arg:args){
-				if (!(arg instanceof Collection)){
-					switch(target.getOperationObject()){
-						case User: solveUser((User)arg, target);break;
-//						case Entitlement: break;
-//						case SalesOrder: break;
-						default: break;
-					}
-				}
-				else{
-					solveObject(arg,target);
-				}
-			}
-		}
 		
 	}
 
@@ -171,20 +136,10 @@ public class LifeCycleScanner {
 	}
 	
 	private void setOperationType(LifeCycle lifeCycle,Record target){
-		Class<?> operationObject = lifeCycle.operationType();
+		VectorDesc vector = VectorList.getVectorDescription(lifeCycle.action());
 		
-		if (operationObject.equals(User.class)){
-			target.setOperationObject(ObjectType.User);
-		}
-//		else if (operationObject.equals(obj)){
-//			
-//		}else if (operationObject.equals()){
-//			
-//		}
-		else{
-			// not the object that has life cycling requirement
-			target.setOperationObject(ObjectType.Other);
-		}
+		target.setSourceObject(VectorList.transTypeToClass(vector.getSourceType()));
+		target.setTargetObject(VectorList.transTypeToClass(vector.getTargetType()));
 	}
 	
 	private void solveObject(Object arg,Record target){

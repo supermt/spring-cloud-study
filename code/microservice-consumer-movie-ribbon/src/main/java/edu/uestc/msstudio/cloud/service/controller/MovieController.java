@@ -17,7 +17,6 @@ public class MovieController {
 	private MovieRepository movieDao;
 	
 	@GetMapping("users/{id}")
-	@LifeCycle(action = LifeCycleActions.query, operationType = User.class)
 	public User searchUser(@PathVariable String id){
 		return movieDao.searchUser(id);
 	}

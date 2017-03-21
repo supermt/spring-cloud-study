@@ -12,7 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
 #      dialect: org.hibernate.dialect.MySQLDialect
   datasource:
-    url: jdbc:mysql://localhost:3306/db_example?useUnicode=true&characterEncoding=utf8 
+    url: jdbc:mysql://localhost:3306/db_example2?useUnicode=true&characterEncoding=utf8 
     username: root
 eureka:
   client:
