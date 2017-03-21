@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.uestc.msstudio.cloud.movieservice.dao.MovieRepository;
-import edu.uestc.msstudio.cloud.recording.LifeCycle;
-import edu.uestc.msstudio.cloud.recording.LifeCycleActions;
 import edu.uestc.msstudio.cloud.userservice.entity.User;
 
 @RestController

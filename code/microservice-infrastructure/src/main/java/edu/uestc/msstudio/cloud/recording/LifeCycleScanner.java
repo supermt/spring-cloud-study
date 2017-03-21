@@ -2,7 +2,6 @@ package edu.uestc.msstudio.cloud.recording;
 
 
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -115,7 +114,7 @@ public class LifeCycleScanner {
 	}
 
 	private void setSource(LifeCycle lifeCycle, Record target, Object[] args) {
-		
+		target.setJsonSource(new Gson().toJson(args));
 	}
 
 	private LifeCycle captureAnnotation(ProceedingJoinPoint pjp) throws NoSuchMethodException, SecurityException {
@@ -138,10 +137,11 @@ public class LifeCycleScanner {
 	private void setOperationType(LifeCycle lifeCycle,Record target){
 		VectorDesc vector = VectorList.getVectorDescription(lifeCycle.action());
 		
+		
 		target.setSourceObject(VectorList.transTypeToClass(vector.getSourceType()));
 		target.setTargetObject(VectorList.transTypeToClass(vector.getTargetType()));
 	}
-	
+	/* not use in this kind of method
 	private void solveObject(Object arg,Record target){
 		// Objects don't save ids, only objects themselves
 		String json = new Gson().toJson(arg);
@@ -164,7 +164,7 @@ public class LifeCycleScanner {
 			target.setJsonSource(json);
 		}
 	}
-	
+	*/
 	private void solveTarget(Object result, Record target) {
 		String json = new Gson().toJson(result);
 		target.setJsonTarget(json);

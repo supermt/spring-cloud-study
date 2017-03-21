@@ -25,6 +25,6 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface RecordRepository extends JpaRepository<Record, Long>{
 	
-	@Query("select r from Record r where operation_object = ?1 and (json_source like ?2 or json_target like ?3)")
+	@Query("select r from Record r where target_object = ?1 and (json_source like ?2 or json_target like ?3)")
 	List<Record> searchByTypeAndId(int type,String idSource,String idTarget);
 }

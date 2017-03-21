@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.uestc.msstudio.cloud.recording.LifeCycleActions;
 import edu.uestc.msstudio.cloud.recording.ObjectType;
 import edu.uestc.msstudio.cloud.recording.Record;
 import edu.uestc.msstudio.cloud.recording.RecordRepository;

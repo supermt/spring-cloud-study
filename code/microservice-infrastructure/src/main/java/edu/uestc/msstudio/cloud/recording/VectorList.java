@@ -36,6 +36,10 @@ public class VectorList {
 		vectors.put(LifeCycleActions.queryUserById, new VectorDesc(LifeCycleStatus.Saved,LifeCycleStatus.Saved,Long.class,User.class));
 		vectors.put(LifeCycleActions.splitUser, new VectorDesc(LifeCycleStatus.Saved,LifeCycleStatus.Saved,User.class,List.class));
 		vectors.put(LifeCycleActions.updateUser, new VectorDesc(LifeCycleStatus.Saved,LifeCycleStatus.Saved,User.class,User.class));
+		vectors.put(LifeCycleActions.mergeUser, new VectorDesc(LifeCycleStatus.Saved,LifeCycleStatus.Saved,List.class,User.class));
+		vectors.put(LifeCycleActions.createUser, new VectorDesc(LifeCycleStatus.InAction,LifeCycleStatus.Saved,List.class,User.class));
+		vectors.put(LifeCycleActions.transferUser, new VectorDesc(LifeCycleStatus.Saved,LifeCycleStatus.Saved,List.class,User.class));
+		
 		typeMap.put(User.class,ObjectType.User);
 	}
 	
