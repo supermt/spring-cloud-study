@@ -61,9 +61,9 @@ public class LifeCycleScanner {
 	
 	@Around("scanLifeCycleAnnotation()")
 	public Object capture(ProceedingJoinPoint pjp) {
-		HttpServletRequest request = getRequestInfo();
+		/*HttpServletRequest request = getRequestInfo();
 		logger.info(request.getHeader("token"));// this can use to get the very first HTTP request, can it get from inner functions?
-		
+		*/
 		Object result = null;
 		Record target = new Record();
 		target.setInstance(host+":"+port);
@@ -90,6 +90,7 @@ public class LifeCycleScanner {
 				target.setEndTime(new Date(System.currentTimeMillis()));//end time
 				target.setOk(true);
 				recordDao.save(target);
+				logger.info("save done:"+new Gson().toJson(target));
 				return result;
 			}
 		} catch (Throwable e) {
@@ -105,6 +106,7 @@ public class LifeCycleScanner {
 	
 	private void setAction(LifeCycle lifeCycle, Record target) {
 		if(lifeCycle.action()==LifeCycleActions.query){
+			target.setAction(lifeCycle.action());
 			return ;
 		}
 		else {
@@ -116,6 +118,7 @@ public class LifeCycleScanner {
 	
 	private void setTarget(LifeCycle lifeCycle, Record target, Object result) {
 		if(lifeCycle.action()==LifeCycleActions.query){
+			solveTarget(result, target);
 			return ;
 		}
 		else if (lifeCycle.action() == LifeCycleActions.create){

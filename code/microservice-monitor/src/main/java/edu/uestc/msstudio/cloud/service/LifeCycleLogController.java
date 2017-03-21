@@ -14,7 +14,6 @@ package edu.uestc.msstudio.cloud.service;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.uestc.msstudio.cloud.recording.LifeCycleActions;
 import edu.uestc.msstudio.cloud.recording.ObjectType;
 import edu.uestc.msstudio.cloud.recording.Record;
 import edu.uestc.msstudio.cloud.recording.RecordRepository;
@@ -154,6 +154,10 @@ public class LifeCycleLogController {
 		String currentTarget = null;
 		
 		for (Record item:input){
+			if (item.getAction()==LifeCycleActions.query){
+				continue;
+			}
+			
 			if (onetoone(item)){
 				// one entity's action like create,transfer
 				currentSource = item.getJsonSource();

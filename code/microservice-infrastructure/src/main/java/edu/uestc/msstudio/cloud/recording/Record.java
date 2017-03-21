@@ -31,7 +31,7 @@ import javax.persistence.Table;
 @Table(name="record")
 public class Record {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 	
 	private Date startTime;
