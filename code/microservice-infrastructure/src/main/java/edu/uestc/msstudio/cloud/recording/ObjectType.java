@@ -22,5 +22,6 @@ public enum ObjectType {
 	Entitlement,
 	User,
 	SalesOrder,
-	Other
+	Other,
+	List
 }

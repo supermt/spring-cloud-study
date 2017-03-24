@@ -74,10 +74,10 @@ public class LifeCycleScanner {
 			}else{
 				
 				LifeCycle lifeCycle = captureAnnotation(pjp);
-				// TODO catch the target object , judge the type of the argument type
+				//  catch the target object , judge the type of the argument type
 				setOperationType(lifeCycle,target);
 				
-				setAction(lifeCycle, target);
+				setAction(lifeCycle, target);// including set the source type and the target type
 				
 				setSource(lifeCycle,target, pjp.getArgs());
 
@@ -88,6 +88,7 @@ public class LifeCycleScanner {
 				logger.info("Happened in : " + target.getInstance());
 				target.setEndTime(new Date(System.currentTimeMillis()));//end time
 				target.setOk(true);
+				
 				recordDao.save(target);
 				logger.info("save done:"+new Gson().toJson(target));
 				return result;
@@ -105,6 +106,9 @@ public class LifeCycleScanner {
 	
 	private void setAction(LifeCycle lifeCycle, Record target) {
 			target.setAction(lifeCycle.action());
+			VectorDesc desc = VectorList.getVectorDescription(lifeCycle.action());
+			target.setTargetObject(VectorList.transTypeToClass(desc.getTargetType()));
+			target.setSourceObject(VectorList.transTypeToClass(desc.getSourceType()));
 			return ;
 	}
 	
@@ -141,39 +145,9 @@ public class LifeCycleScanner {
 		target.setSourceObject(VectorList.transTypeToClass(vector.getSourceType()));
 		target.setTargetObject(VectorList.transTypeToClass(vector.getTargetType()));
 	}
-	/* not use in this kind of method
-	private void solveObject(Object arg,Record target){
-		// Objects don't save ids, only objects themselves
-		String json = new Gson().toJson(arg);
-		if (target.getJsonSource()!=null){
-			StringBuilder result = new StringBuilder(target.getJsonSource());
-			target.setJsonSource(result.append(json).toString());
-		}
-		else{
-			target.setJsonSource(json);
-		}
-	}
 	
-	private void solveUser(User arg,Record target){
-		String json = new Gson().toJson(arg);
-		if (target.getJsonSource()!=null){
-			StringBuilder result = new StringBuilder(target.getJsonSource());
-			target.setJsonSource(result.append(json).toString());
-		}
-		else{
-			target.setJsonSource(json);
-		}
-	}
-	*/
 	private void solveTarget(Object result, Record target) {
 		String json = new Gson().toJson(result);
 		target.setJsonTarget(json);
 	}
-
-	
-//	private void solveEntitlement(){
-//		
-//	}
-//	
-//	private void solveSalesOrder(){}
 }
