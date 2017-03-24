@@ -23,38 +23,37 @@ public class UserController {
   private UserRepository userRepository;
   
   @GetMapping("/{id}")
-  @LifeCycle(action = LifeCycleActions.query,operationType = User.class)
+  @LifeCycle(action = LifeCycleActions.queryUserById)
   public User findById(@PathVariable Long id) {
     return  this.userRepository.findOne(id);
   }
   
   @GetMapping("/createTest")
-  @LifeCycle(action = LifeCycleActions.create, operationType = User.class)
+  @LifeCycle(action = LifeCycleActions.createUser)
   public User createUserSample(){
 	  User result = new User();
 	  return this.userRepository.save(result);
   }
   
   @PostMapping("/createOne")
-  @LifeCycle(action = LifeCycleActions.create, operationType = User.class)
+  @LifeCycle(action = LifeCycleActions.createUser)
   public User createOne(@RequestBody User user){
 	  return this.userRepository.save(user);
   }
   
   @PostMapping("/createList")
-  @LifeCycle(action = LifeCycleActions.create, operationType = User.class)
+  @LifeCycle(action = LifeCycleActions.createUser)
   public List<User> createList(@RequestBody List<User> users){
 	  return this.userRepository.save(users);
   }
   
   @GetMapping("/count")
-  @LifeCycle(action = LifeCycleActions.query, operationType = User.class)
   public Long countUsers(){
 	  return userRepository.myCount();
   }
   
   @PutMapping("/transfer")
-  @LifeCycle(action = LifeCycleActions.transfer, operationType = User.class)
+  @LifeCycle(action = LifeCycleActions.transferUser)
   public User UserGrowOlder(@RequestBody User sourceUser){
 	  sourceUser.setAge(sourceUser.getAge()+1);
 	  userRepository.save(sourceUser);
@@ -62,7 +61,7 @@ public class UserController {
   }
   
   @PutMapping("/split")
-  @LifeCycle(action = LifeCycleActions.split, operationType = User.class)
+  @LifeCycle(action = LifeCycleActions.splitUser)
   public List<User> randomSplitUser(@RequestBody User sourceUser){
 	  int randomAge = new Random().nextInt(sourceUser.getAge());
 	  List<User> result = new ArrayList<>();
@@ -83,7 +82,7 @@ public class UserController {
   }
   
   @PutMapping("/merge")
-  @LifeCycle(action = LifeCycleActions.merge, operationType = User.class)
+  @LifeCycle(action = LifeCycleActions.mergeUser)
   public User mergeUsers(@RequestBody List<User> users){
 	  
 	  User result = new User();

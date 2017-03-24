@@ -1,0 +1,17 @@
+server:
+  port: 11000
+spring:
+  application:
+    name: node-sidecar
+sidecar:
+  port: 8200
+  home-page-uri: http://localhost:${sidecar.port}/
+  health-uri: http://localhost:${sidecar.port}/health
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:9000/eureka/    # 指定注册中心的地址
+  instance:
+    preferIpAddress: true
+    hostname: user

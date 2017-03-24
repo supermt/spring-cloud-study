@@ -2,7 +2,6 @@ package edu.uestc.msstudio.cloud.recording;
 
 
 import java.lang.reflect.Method;
-import java.util.Collection;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,10 +74,10 @@ public class LifeCycleScanner {
 			}else{
 				
 				LifeCycle lifeCycle = captureAnnotation(pjp);
-				// TODO catch the target object , judge the type of the argument type
+				//  catch the target object , judge the type of the argument type
 				setOperationType(lifeCycle,target);
 				
-				setAction(lifeCycle, target);
+				setAction(lifeCycle, target);// including set the source type and the target type
 				
 				setSource(lifeCycle,target, pjp.getArgs());
 
@@ -89,6 +88,7 @@ public class LifeCycleScanner {
 				logger.info("Happened in : " + target.getInstance());
 				target.setEndTime(new Date(System.currentTimeMillis()));//end time
 				target.setOk(true);
+				
 				recordDao.save(target);
 				logger.info("save done:"+new Gson().toJson(target));
 				return result;
@@ -105,52 +105,20 @@ public class LifeCycleScanner {
 	}
 	
 	private void setAction(LifeCycle lifeCycle, Record target) {
-		if(lifeCycle.action()==LifeCycleActions.query){
 			target.setAction(lifeCycle.action());
+			VectorDesc desc = VectorList.getVectorDescription(lifeCycle.action());
+			target.setTargetObject(VectorList.transTypeToClass(desc.getTargetType()));
+			target.setSourceObject(VectorList.transTypeToClass(desc.getSourceType()));
 			return ;
-		}
-		else {
-			// not only query,save the action
-			target.setAction(lifeCycle.action());
-			
-		}
 	}
 	
 	private void setTarget(LifeCycle lifeCycle, Record target, Object result) {
-		if(lifeCycle.action()==LifeCycleActions.query){
-			solveTarget(result, target);
-			return ;
-		}
-		else if (lifeCycle.action() == LifeCycleActions.create){
-			// saved success 
-			solveTarget(result, target);
-			return ;
-		}else{
-			// expand methods
-		}
+		solveTarget(result, target);
+		return ;
 	}
 
 	private void setSource(LifeCycle lifeCycle, Record target, Object[] args) {
-		if (lifeCycle.action()==LifeCycleActions.query){
-			// if only query the objects , don't save the objects
-			return ;
-		}
-		else{
-			for (Object arg:args){
-				if (!(arg instanceof Collection)){
-					switch(target.getOperationObject()){
-						case User: solveUser((User)arg, target);break;
-//						case Entitlement: break;
-//						case SalesOrder: break;
-						default: break;
-					}
-				}
-				else{
-					solveObject(arg,target);
-				}
-			}
-		}
-		
+		target.setJsonSource(new Gson().toJson(args));
 	}
 
 	private LifeCycle captureAnnotation(ProceedingJoinPoint pjp) throws NoSuchMethodException, SecurityException {
@@ -171,54 +139,15 @@ public class LifeCycleScanner {
 	}
 	
 	private void setOperationType(LifeCycle lifeCycle,Record target){
-		Class<?> operationObject = lifeCycle.operationType();
+		VectorDesc vector = VectorList.getVectorDescription(lifeCycle.action());
 		
-		if (operationObject.equals(User.class)){
-			target.setOperationObject(ObjectType.User);
-		}
-//		else if (operationObject.equals(obj)){
-//			
-//		}else if (operationObject.equals()){
-//			
-//		}
-		else{
-			// not the object that has life cycling requirement
-			target.setOperationObject(ObjectType.Other);
-		}
-	}
-	
-	private void solveObject(Object arg,Record target){
-		// Objects don't save ids, only objects themselves
-		String json = new Gson().toJson(arg);
-		if (target.getJsonSource()!=null){
-			StringBuilder result = new StringBuilder(target.getJsonSource());
-			target.setJsonSource(result.append(json).toString());
-		}
-		else{
-			target.setJsonSource(json);
-		}
-	}
-	
-	private void solveUser(User arg,Record target){
-		String json = new Gson().toJson(arg);
-		if (target.getJsonSource()!=null){
-			StringBuilder result = new StringBuilder(target.getJsonSource());
-			target.setJsonSource(result.append(json).toString());
-		}
-		else{
-			target.setJsonSource(json);
-		}
+		
+		target.setSourceObject(VectorList.transTypeToClass(vector.getSourceType()));
+		target.setTargetObject(VectorList.transTypeToClass(vector.getTargetType()));
 	}
 	
 	private void solveTarget(Object result, Record target) {
 		String json = new Gson().toJson(result);
 		target.setJsonTarget(json);
 	}
-
-	
-//	private void solveEntitlement(){
-//		
-//	}
-//	
-//	private void solveSalesOrder(){}
 }

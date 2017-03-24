@@ -19,11 +19,11 @@ package edu.uestc.msstudio.cloud.recording;
  * @date: 2017年3月13日 下午4:36:47  
  */
 public enum  LifeCycleActions {
-	query,
-	create,
-	delete,
-	update,
-	transfer,
-	merge, 
-	split
+	createUser,
+	transferUser,
+	mergeUser, 
+	splitUser,
+	queryByUser,
+	queryUserById,
+	updateUser
 }
